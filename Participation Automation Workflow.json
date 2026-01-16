@@ -1,0 +1,99 @@
+{
+  "name": "Participation Automation Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Email Address'] }}",
+        "subject": "🎉 Confirmation: Your Participation in the [Activity Name] is Successful!",
+        "message": "=<p>Dear {{ $json['Full Name'] }},</p>\n\n<p>Thank you for completing your registration. We are happy to confirm your participation in the upcoming <strong>[Activity Name]</strong> organized by the CIS Community.</p>\n\n<p><strong>Activity Details:</strong><br>\nStart Time: [Date & Time]<br>\nMode: Online</p>\n\n<p>All further instructions and updates will be shared in our dedicated WhatsApp group. Please join using the link below:</p>\n\n<p><a href=\"\" style=\"background-color:#25d366; color:#ffffff; padding:10px 15px; border-radius:5px; text-decoration:none;\">Join WhatsApp Group</a></p>\n\n<p><strong>Important Instructions:</strong></p>\n<ul>\n  <li>Participate properly to be eligible to receive a certificate.</li>\n  <li>Any misbehavior will be recorded, and you may not be allowed to participate in future activities.</li>\n</ul>\n\n<p>If you have any questions, feel free to reach out to us at <a href=\"mailto:[CIS Contact Email]\">[CIS Contact Email]</a>.</p>\n\n<p>We look forward to your participation!</p>\n\n<p>Warm regards,<br>\n<strong>CIS Community Team</strong></p>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -160,
+        64
+      ],
+      "id": "94766ba8-3a9e-440c-aead-9c9f817b78fe",
+      "name": "Send a message",
+      "webhookId": "fa6db456-e0fb-4aff-a999-c57b21c4ec0a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "2ZQBelEKdmL1anTs",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM",
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1725484009,
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit#gid=1725484009"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        64
+      ],
+      "id": "57f72215-54b2-4edb-a09c-90e325df2e6c",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "OlFQWoJ26ACIvlXF",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Send a message": {
+      "main": [
+        []
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "e8aed0a3-d44b-46a5-8265-e302bad5bee1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4c5016c82749dc5bb58bf679c6b9a57f48d2a7f0edadbb1da80353d373de58a2"
+  },
+  "id": "8R13f92_xM3IxYLeMafBZ",
+  "tags": []
+}

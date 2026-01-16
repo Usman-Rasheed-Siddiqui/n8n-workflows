@@ -1,0 +1,943 @@
+{
+  "name": "Final Solution Checking",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM",
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1667173423,
+          "mode": "list",
+          "cachedResultName": "Solution Submissions",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit#gid=1667173423"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1712,
+        80
+      ],
+      "id": "c23fa26b-7736-4025-bc00-eef692bff723",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "OlFQWoJ26ACIvlXF",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "repository",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $json['GitHub Username'] }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "=winter-activity-Logic-Forge-CIS-Community",
+          "mode": "name"
+        }
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        -1232,
+        80
+      ],
+      "id": "93e4b2f0-ccae-4733-a531-a177ed45fea0",
+      "name": "Get a repository",
+      "webhookId": "2f6d29be-5d71-43eb-a21b-bd5ead5e3b5e",
+      "credentials": {
+        "githubApi": {
+          "id": "mp3gU0l60Ts02C3j",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4fad4b55-5dc2-40aa-b986-bc3472076c09",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": ".py",
+              "operator": {
+                "type": "string",
+                "operation": "endsWith"
+              }
+            },
+            {
+              "id": "c2be80cb-161e-4d8f-81b2-0417e19426d5",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": ".c",
+              "operator": {
+                "type": "string",
+                "operation": "endsWith"
+              }
+            },
+            {
+              "id": "96f78f08-02e5-4837-9e7b-15ffdec866d5",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": ".cpp",
+              "operator": {
+                "type": "string",
+                "operation": "endsWith"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        304,
+        48
+      ],
+      "id": "0bff1de6-179a-4a90-a092-efa77c3d11fa",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        544,
+        0
+      ],
+      "id": "c96ef47b-9f0b-464a-a967-25a8f6ac47da",
+      "name": "Loop Over Items",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM",
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1725484009,
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit#gid=1725484009"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email address",
+              "lookupValue": "={{ $json['Email Address'] }}"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": false
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1504,
+        80
+      ],
+      "id": "366ff712-ef89-414c-af6b-f4359305a777",
+      "name": "Participant Data",
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ESyxcs0O4rMH4zxb",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d8d38e28-5444-466a-9ff9-ed6755ee7a66",
+              "name": "owner",
+              "value": "={{ $json.full_name.split('/')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "1fb9e315-9662-459d-b556-21b730f5f1d8",
+              "name": "repo",
+              "value": "={{ $json.full_name.split('/')[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -720,
+        80
+      ],
+      "id": "ba5f3989-74b0-4e36-a7e3-d88fc005b7da",
+      "name": "Owner and Repo Separator"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/{{ $json.owner }}/{{ $json.repo }}/contents\n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -528,
+        80
+      ],
+      "id": "ebdfe708-2213-4b60-9953-353b389ba132",
+      "name": "Getting Repository Contents",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "Ub7sCFOASjiBJ2Lr",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/{{ $('Owner and Repo Separator').item.json.owner }}/{{ $('Owner and Repo Separator').item.json.repo }}/contents/Week%201\n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -336,
+        80
+      ],
+      "id": "0b76cfc1-e2a7-4af9-9278-1e11eb643dd7",
+      "name": "Getting files from a folder in the repository",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "Ub7sCFOASjiBJ2Lr",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Getting files from a folder in the repository').item.json.download_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        928,
+        16
+      ],
+      "id": "80ead6d8-ffb1-47a7-8a90-e6ce793d326f",
+      "name": "Getting code file data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4d9f6254-1461-4d2c-9774-52f0cfb378d5",
+              "name": "code",
+              "value": "={{ $json.data }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1136,
+        16
+      ],
+      "id": "ad03a83e-3b9b-43d7-aea6-8974c34400ca",
+      "name": "Making code into a string to pass"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are an automated programming challenge grader.\n\nYou are given:\n• One challenge description\n• One student’s source code file (Python)\n• The filename\n\nYour task is to evaluate this file ONLY for the given challenge.\n\n---\n\nImportant Grading Flexibility (Very Important)\n\nDo NOT grade in an overly strict or literal manner.\n\nIf the student’s solution:\n\n* Takes the correct input\n* Produces the correct output\n* Logically solves the problem\n* Nearly satisfies all requirements\n\nThen you MAY award full marks, even if:\n\n* There are small formatting issues\n* There are minor inefficiencies\n* There are small human mistakes that do not affect correctness\n\nZERO marks (0) should be given ONLY IF:\n\n* The challenge is not solved at all\n* The code is completely unrelated\n* The solution is fundamentally incorrect\n* The file is effectively not submitted\n\nDo NOT give zero marks for minor or human-level mistakes.\n\n---\n\nRules\n\n* Assess correctness using ONLY the examples provided in the challenge description\n* Do NOT assume or invent additional test cases\n* If the file is unrelated to the challenge, mark it as not submitted\n* Do not be very strict on logic, but flexible on human error\n* If the code solves the query in anyway, give him the marks\n\n---\n\nGrading Criteria (Maximum 2 Marks)\n\n2.0 marks\nAll examples pass correctly OR solution clearly works as intended with minor human errors\n\n1.0 – 1.75 marks\nSolution is mostly correct, examples largely pass, small logical or structural issues\n\n0.25 – 0.75 marks\nSome examples pass OR logic is partially correct\n\n0.5 marks\nCode exists but does not run due to minor errors (syntax, small naming mistakes, missing return)\n\n0 marks\nNo relevant code OR solution is largely incorrect or unrelated\n\n---\n\nAlso Check\n\n* Logical correctness\n* Edge cases mentioned in the description\n* Time complexity relative to given constraints\n* Function name and parameters (if specified)\n* Presence of a return statement if the problem requires returning a value\n\n---\n\nMandatory Output Format\n(VERY IMPORTANT — follow EXACTLY)\n\nThe output MUST be a single JSON object and nothing else.\n\nThe JSON MUST include the challenge name field as shown below.\n\n{\n\"challenge_name\": \"Challenge_<challenge_number>\",\n\"filename\": \"<filename>\",\n\"correctness\": \"<1 for partial or pass, 0 for fail>\",\n\"marks_awarded\": <number>,\n\"examples_result\": \"<which examples passed or failed>\",\n\"comments\": \"<optional improvements>\"\n}\n\n---\n\nStrict Output Rules\n\n* Do NOT include markdown\n* Do NOT include explanations outside the JSON\n* Do NOT include extra text before or after the JSON\n\n---\n\nChallenge Description:\n{{ $('Challenges').item.json.Description }}\n\nFilename:\n{{ $('Getting files from a folder in the repository').item.json.name }}\n\nStudent Code:\n{{ $json.code }}\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        1344,
+        16
+      ],
+      "id": "40f7e7b5-aaf8-4689-8547-45fd488e40e9",
+      "name": "AI Code Reviewer",
+      "credentials": {
+        "openAiApi": {
+          "id": "EAIXtsGSK9EClsNv",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "726f769a-ea5e-4197-ac9f-b34cafef1f8e",
+              "name": "ai_grading_raw",
+              "value": "={{ $json.output[0].content[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1936,
+        16
+      ],
+      "id": "d24d7538-6466-497b-8007-ad9fff3afc1c",
+      "name": "RawAiData"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f0d273c1-99bb-4135-a6df-df5a1405c9aa",
+              "name": "ai_grading",
+              "value": "={{ JSON.parse($json.ai_grading_raw) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        16
+      ],
+      "id": "0ab25047-7837-47fa-8fcc-f7ed6d31f323",
+      "name": "AIGradingProper"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nlet totalMarks = 0;\nlet totalSolved = 0;\nlet allComments = \"\";\n\n// Access the array inside the 'data' property\nconst results = items[0].json.data; \n\nfor (let i = 0; i < results.length; i++) {\n  const entry = results[i];\n  const ai = JSON.parse(entry.ai_grading);\n  \n  // 1. Accumulate Marks\n  totalMarks += parseFloat(ai.marks_awarded || 0);\n  \n  // 2. Count Solved\n  if (ai.correctness == \"1\" || ai.correctness == \"pass\") {\n    totalSolved += 1;\n  }\n\n  // 3. Build Numbered Comments List\n  // Format: \"1. Challenge_1: [Comment text]\"\n  const challengeName = ai.challenge_name || `Challenge ${i + 1}`;\n  const commentText = ai.comments || \"No comments provided.\";\n  \n  allComments += `${i + 1}. ${challengeName}: ${commentText}\\n\\n`;\n}\n\nreturn {\n  total_marks: totalMarks,\n  total_questions_solved: totalSolved,\n  all_comments: allComments.trim(), // Removes the extra newline at the end\n  email: $('Google Sheets Trigger').item.json['Email address']\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1216,
+        -192
+      ],
+      "id": "1ab63e28-c6e1-428d-ba4e-fbc5ed7821a9",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "=data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        -192
+      ],
+      "id": "f88ff7c5-f0e1-476f-835f-1e4b2cde14a5",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1696,
+        16
+      ],
+      "id": "262435be-79a6-4ab6-a8c1-8db3946b4690",
+      "name": "Wait",
+      "webhookId": "5491ed73-17c8-4fe2-80b4-a9bef85075f6"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM",
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 724822279,
+          "mode": "list",
+          "cachedResultName": "Challenges",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit#gid=724822279"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -80,
+        240
+      ],
+      "id": "ed8271fe-0b46-46f5-9d80-77d3d78b28bc",
+      "name": "Challenges",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ESyxcs0O4rMH4zxb",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "size",
+        "joinMode": "keepNonMatches",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        144,
+        224
+      ],
+      "id": "546b2294-5d8f-4e7c-99b0-e6b0857052d7",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM",
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1667173423,
+          "mode": "list",
+          "cachedResultName": "Solution Submissions",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit#gid=1667173423"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email Address": "={{ $json.email }}",
+            "Question Solved": "={{ $json.total_questions_solved }}",
+            "Points on Questions": "={{ $json.total_marks }}",
+            "Comments": "={{ $json.all_comments }}"
+          },
+          "matchingColumns": [
+            "Email Address"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email address",
+              "displayName": "Email address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email Address",
+              "displayName": "Email Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "GitHub Repository Link",
+              "displayName": "GitHub Repository Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Bonus Deadline",
+              "displayName": "Bonus Deadline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Before Bonus Deadline",
+              "displayName": "Before Bonus Deadline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Bonus Points",
+              "displayName": "Bonus Points",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Number of Challenges",
+              "displayName": "Number of Challenges",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Question Solved",
+              "displayName": "Question Solved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Points on Questions",
+              "displayName": "Points on Questions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Total Points",
+              "displayName": "Total Points",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Comments",
+              "displayName": "Comments",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1488,
+        -192
+      ],
+      "id": "4c58182b-34e0-434a-9a2a-5daef41d00c4",
+      "name": "Adding the calculated marks and Comments",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ESyxcs0O4rMH4zxb",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -992,
+        80
+      ],
+      "id": "8db6b152-f5fc-452e-824f-b139af140358",
+      "name": "Taking only one entry of multiple"
+    },
+    {
+      "parameters": {
+        "maxItems": "={{ $('Google Sheets Trigger').item.json['Number of Challenges'] + 1 }}"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        80
+      ],
+      "id": "29b8ef04-cdad-4849-bd37-2ff78ab100e4",
+      "name": "Challenges + pdf"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Participant Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a repository": {
+      "main": [
+        [
+          {
+            "node": "Taking only one entry of multiple",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Getting code file data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Participant Data": {
+      "main": [
+        [
+          {
+            "node": "Get a repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Owner and Repo Separator": {
+      "main": [
+        [
+          {
+            "node": "Getting Repository Contents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting Repository Contents": {
+      "main": [
+        [
+          {
+            "node": "Getting files from a folder in the repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting files from a folder in the repository": {
+      "main": [
+        [
+          {
+            "node": "Challenges + pdf",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Challenges",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting code file data": {
+      "main": [
+        [
+          {
+            "node": "Making code into a string to pass",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Making code into a string to pass": {
+      "main": [
+        [
+          {
+            "node": "AI Code Reviewer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Code Reviewer": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RawAiData": {
+      "main": [
+        [
+          {
+            "node": "AIGradingProper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AIGradingProper": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Adding the calculated marks and Comments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "RawAiData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Challenges": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Taking only one entry of multiple": {
+      "main": [
+        [
+          {
+            "node": "Owner and Repo Separator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Challenges + pdf": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "26cd3ee4-bd20-4797-b4be-bb6ad1281c6e",
+  "meta": {
+    "instanceId": "4c5016c82749dc5bb58bf679c6b9a57f48d2a7f0edadbb1da80353d373de58a2"
+  },
+  "id": "lgKZiVuDJjBaKSdVFdbJ1",
+  "tags": []
+}

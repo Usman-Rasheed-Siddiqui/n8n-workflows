@@ -1,0 +1,1009 @@
+{
+  "name": "Solution Checking 2",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM",
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1667173423,
+          "mode": "list",
+          "cachedResultName": "Week 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit#gid=1667173423"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        736,
+        48
+      ],
+      "id": "c4d1e441-2f2c-4769-a7d7-5e2bd72d89af",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "OlFQWoJ26ACIvlXF",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "repository",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Participant Data').item.json['GitHub Username'] }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "=winter-activity-Logic-Forge-CIS-Community",
+          "mode": "name"
+        }
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        1328,
+        48
+      ],
+      "id": "a92e8630-ba7c-46ee-ae78-8f64b4f788f1",
+      "name": "Get a repository",
+      "webhookId": "2f6d29be-5d71-43eb-a21b-bd5ead5e3b5e",
+      "credentials": {
+        "githubApi": {
+          "id": "mp3gU0l60Ts02C3j",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4fad4b55-5dc2-40aa-b986-bc3472076c09",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": ".py",
+              "operator": {
+                "type": "string",
+                "operation": "endsWith"
+              }
+            },
+            {
+              "id": "c2be80cb-161e-4d8f-81b2-0417e19426d5",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": ".c",
+              "operator": {
+                "type": "string",
+                "operation": "endsWith"
+              }
+            },
+            {
+              "id": "96f78f08-02e5-4837-9e7b-15ffdec866d5",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": ".cpp",
+              "operator": {
+                "type": "string",
+                "operation": "endsWith"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2176,
+        48
+      ],
+      "id": "da26ab45-ed22-4d1c-bf0b-0010704d241f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2688,
+        -32
+      ],
+      "id": "900bf2c4-2ca7-4c2c-ac1a-61fa1d54131c",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM",
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1725484009,
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit#gid=1725484009"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email address",
+              "lookupValue": "={{ $json['Email Address'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        944,
+        48
+      ],
+      "id": "d914c1d0-004c-43da-8c93-7db2d95b841d",
+      "name": "Participant Data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ESyxcs0O4rMH4zxb",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM",
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1667173423,
+          "mode": "list",
+          "cachedResultName": "Solution Submissions",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit#gid=1667173423"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email Address": "={{ $('Google Sheets Trigger').item.json['Email address'] }}",
+            "Question Solved": "={{ $json[\"Question Solved\"] }}",
+            "ai_grading": "={{ $('AIGradingProper').item.json.ai_grading }}"
+          },
+          "matchingColumns": [
+            "Email Address"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email address",
+              "displayName": "Email address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email Address",
+              "displayName": "Email Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "GitHub Repository Link",
+              "displayName": "GitHub Repository Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Bonus Deadline",
+              "displayName": "Bonus Deadline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Before Bonus Deadline",
+              "displayName": "Before Bonus Deadline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Bonus Points",
+              "displayName": "Bonus Points",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ai_grading",
+              "displayName": "ai_grading",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Question Solved",
+              "displayName": "Question Solved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Challenge_1",
+              "displayName": "Challenge_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Challenge_2",
+              "displayName": "Challenge_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Challenge_3",
+              "displayName": "Challenge_3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Challenge_4",
+              "displayName": "Challenge_4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Challenge_5",
+              "displayName": "Challenge_5",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Challenge_6",
+              "displayName": "Challenge_6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Total Points",
+              "displayName": "Total Points",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Issues_1",
+              "displayName": "Issues_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Issues_2",
+              "displayName": "Issues_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Issues_3",
+              "displayName": "Issues_3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Issues_4",
+              "displayName": "Issues_4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Issues_5",
+              "displayName": "Issues_5",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Issues_6",
+              "displayName": "Issues_6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "suggestions_1",
+              "displayName": "suggestions_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "suggestions_2",
+              "displayName": "suggestions_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "suggestions_3",
+              "displayName": "suggestions_3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "suggestions_4",
+              "displayName": "suggestions_4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "suggestions_5",
+              "displayName": "suggestions_5",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "suggestions_6",
+              "displayName": "suggestions_6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        4640,
+        -16
+      ],
+      "id": "d36c2c46-5930-4413-a558-956497f18ccb",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ESyxcs0O4rMH4zxb",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d8d38e28-5444-466a-9ff9-ed6755ee7a66",
+              "name": "owner",
+              "value": "={{ $json.full_name.split('/')[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "1fb9e315-9662-459d-b556-21b730f5f1d8",
+              "name": "repo",
+              "value": "={{ $json.full_name.split('/')[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1520,
+        48
+      ],
+      "id": "ecb689be-5c3b-42cb-acb4-89ab2e214a4f",
+      "name": "Owner and Repo Separator"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/{{ $json.owner }}/{{ $json.repo }}/contents\n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1712,
+        48
+      ],
+      "id": "c253a11f-7b4a-4d6d-93f1-9003e4ca28da",
+      "name": "Getting Repository Contents",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "Ub7sCFOASjiBJ2Lr",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/{{ $('Owner and Repo Separator').item.json.owner }}/{{ $('Owner and Repo Separator').item.json.repo }}/contents/Week%201\n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1968,
+        48
+      ],
+      "id": "ebd726c8-f0eb-4447-a3ce-2379c34f2cba",
+      "name": "Getting files from a folder in the repository",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "Ub7sCFOASjiBJ2Lr",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Getting files from a folder in the repository').item.json.download_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2960,
+        -16
+      ],
+      "id": "dd791286-81dd-4f9d-a8c2-52b3aae3f5f2",
+      "name": "Getting code file data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4d9f6254-1461-4d2c-9774-52f0cfb378d5",
+              "name": "code",
+              "value": "={{ $json.data }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3168,
+        -16
+      ],
+      "id": "c867425b-6b85-4bb1-9ba1-8355c0966c3d",
+      "name": "Making code into a string to pass"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are an automated programming challenge grader.\n\nYou are given:\n• One challenge description\n• One student’s source code file (Python)\n• The filename\n\nYour task is to evaluate this file ONLY for the given challenge.\n\n---\n\nImportant Grading Flexibility (Very Important)\n\nDo NOT grade in an overly strict or literal manner.\n\nIf the student’s solution:\n\n* Takes the correct input\n* Produces the correct output\n* Logically solves the problem\n* Nearly satisfies all requirements\n\nThen you MAY award full marks, even if:\n\n* There are small formatting issues\n* There are minor inefficiencies\n* There are small human mistakes that do not affect correctness\n\nZERO marks (0) should be given ONLY IF:\n\n* The challenge is not solved at all\n* The code is completely unrelated\n* The solution is fundamentally incorrect\n* The file is effectively not submitted\n\nDo NOT give zero marks for minor or human-level mistakes.\n\n---\n\nRules\n\n* Assess correctness using ONLY the examples provided in the challenge description\n* Do NOT assume or invent additional test cases\n* If the file is unrelated to the challenge, mark it as not submitted\n* Be strict on logic, but flexible on human error\n\n---\n\nGrading Criteria (Maximum 2 Marks)\n\n2.0 marks\nAll examples pass correctly OR solution clearly works as intended with minor human errors\n\n1.0 – 1.75 marks\nSolution is mostly correct, examples largely pass, small logical or structural issues\n\n0.25 – 0.75 marks\nSome examples pass OR logic is partially correct\n\n0.5 marks\nCode exists but does not run due to minor errors (syntax, small naming mistakes, missing return)\n\n0 marks\nNo relevant code OR solution is largely incorrect or unrelated\n\n---\n\nAlso Check\n\n* Logical correctness\n* Edge cases mentioned in the description\n* Time complexity relative to given constraints\n* Function name and parameters (if specified)\n* Presence of a return statement if the problem requires returning a value\n\n---\n\nMandatory Output Format\n(VERY IMPORTANT — follow EXACTLY)\n\nThe output MUST be a single JSON object and nothing else.\n\nThe JSON MUST include the challenge name field as shown below.\n\n{\n\"challenge_name\": \"Challenge_<challenge_number>\",\n\"filename\": \"<filename>\",\n\"correctness\": \"<pass / partial / fail>\",\n\"marks_awarded\": <number>,\n\"issues\": \"<brief explanation>\",\n\"examples_result\": \"<which examples passed or failed>\",\n\"suggestions\": \"<optional improvements>\"\n}\n\n---\n\nStrict Output Rules\n\n* Do NOT include markdown\n* Do NOT include explanations outside the JSON\n* Do NOT include extra text before or after the JSON\n\n---\n\nChallenge Description:\n{{ $('Challenges').item.json.Description }}\n\nFilename:\n{{ $('Getting files from a folder in the repository').item.json.name }}\n\nStudent Code:\n{{ $json.code }}\n"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        3376,
+        -16
+      ],
+      "id": "8d4861d9-f0e5-444a-b658-41b5635f8bab",
+      "name": "AI Code Reviewer",
+      "credentials": {
+        "openAiApi": {
+          "id": "EAIXtsGSK9EClsNv",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "726f769a-ea5e-4197-ac9f-b34cafef1f8e",
+              "name": "ai_grading_raw",
+              "value": "={{ $json.output[0].content[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3808,
+        -16
+      ],
+      "id": "06c29daf-72dc-401a-8162-c1d665783cc2",
+      "name": "RawAiData"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f0d273c1-99bb-4135-a6df-df5a1405c9aa",
+              "name": "ai_grading",
+              "value": "={{ JSON.parse($json.ai_grading_raw) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4016,
+        -16
+      ],
+      "id": "85d82629-eea8-43c7-b472-350644693c46",
+      "name": "AIGradingProper"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "245df95f-731b-431e-9a63-61af3b1b4e4f",
+              "name": "Question Solved",
+              "value": "={{ \n  (() => {\n    const grading = JSON.parse($json.ai_grading);\n    return (grading.correctness === 'pass' || grading.correctness === 'partial') ? 1 : 0;\n  })()\n}}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4224,
+        -16
+      ],
+      "id": "d019d1d4-50a3-437f-9196-38ad2c62bf7b",
+      "name": "GettingSolvedQuestions"
+    },
+    {
+      "parameters": {
+        "amount": 20
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4912,
+        176
+      ],
+      "id": "10e9055f-b34b-404e-97ea-3efed117561e",
+      "name": "Wait",
+      "webhookId": "5491ed73-17c8-4fe2-80b4-a9bef85075f6"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM",
+          "mode": "list",
+          "cachedResultName": "Participants Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 724822279,
+          "mode": "list",
+          "cachedResultName": "Challenges Week 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1S1baIh6HY5comV0Kf4oQkpzk8jqOj-4TxRhI8RZwfcM/edit#gid=724822279"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1120,
+        48
+      ],
+      "id": "4794c4bf-539e-455d-b43e-662779c8a421",
+      "name": "Challenges",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ESyxcs0O4rMH4zxb",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Participant Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a repository": {
+      "main": [
+        [
+          {
+            "node": "Owner and Repo Separator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Getting code file data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Participant Data": {
+      "main": [
+        [
+          {
+            "node": "Challenges",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Owner and Repo Separator": {
+      "main": [
+        [
+          {
+            "node": "Getting Repository Contents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting Repository Contents": {
+      "main": [
+        [
+          {
+            "node": "Getting files from a folder in the repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting files from a folder in the repository": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting code file data": {
+      "main": [
+        [
+          {
+            "node": "Making code into a string to pass",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Making code into a string to pass": {
+      "main": [
+        [
+          {
+            "node": "AI Code Reviewer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Code Reviewer": {
+      "main": [
+        [
+          {
+            "node": "RawAiData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RawAiData": {
+      "main": [
+        [
+          {
+            "node": "AIGradingProper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AIGradingProper": {
+      "main": [
+        [
+          {
+            "node": "GettingSolvedQuestions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GettingSolvedQuestions": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Challenges": {
+      "main": [
+        [
+          {
+            "node": "Get a repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "b54ea408-4d44-41c1-9c8b-7fae0be667bc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4c5016c82749dc5bb58bf679c6b9a57f48d2a7f0edadbb1da80353d373de58a2"
+  },
+  "id": "ZiX2HgyAvUg1ahiX",
+  "tags": []
+}
